@@ -1,0 +1,74 @@
+using System;
+
+namespace EvHalki
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            var mother = new PeopleOfMyFamily()
+            {
+                YearOfBirth = 1960,
+                Occupation = "N/A",
+                Name = "Ayse",
+                EyeColor = "Brown"
+            };
+            var father = new PeopleOfMyFamily()
+            {
+                YearOfBirth = 1955,
+                Occupation = "Engineer",
+                Name = "Ali",
+                EyeColor = "Blue"
+            };
+
+            var sister = new PeopleOfMyFamily()
+            {
+                YearOfBirth = 1980,
+                Occupation = "Teacher",
+                Name = "Fatma",
+                EyeColor = "Green"
+            };
+
+
+
+            ToConsole(mother);
+            ToConsole(father);
+            ToConsole(sister);
+
+
+
+        }
+
+        static void ToConsole(PeopleOfMyFamily person)
+        {
+            Console.WriteLine("---------");
+            Console.WriteLine($"Name: {person.Name}");
+            Console.WriteLine($"Age: {person.Age} ({person.YearOfBirth})");
+            Console.WriteLine($"Occupation: {person.Occupation}, EyeColor: {person.EyeColor}");
+            Console.WriteLine("---------");
+        }
+
+    }
+
+
+
+    class PeopleOfMyFamily
+    {
+        public int YearOfBirth { get; set; }
+
+        public string Occupation { get; set; }
+
+        public string Name { get; set; }
+
+        public string EyeColor { get; set; }
+
+        public int Age
+        {
+            get
+            {
+                return DateTime.Now.Year - YearOfBirth;
+            }
+        }
+    }
+}
