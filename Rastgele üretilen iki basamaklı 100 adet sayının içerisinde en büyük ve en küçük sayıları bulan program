@@ -1,0 +1,19 @@
+static void Main(string[] args)
+{
+ Random rnd = new Random();
+ int[] dizi = new int[100];
+ for (int i = 0; i < dizi.Length; i++)
+ dizi[i] = rnd.Next(10, 99);
+ int buyuk, kucuk;
+ Buyuk_Kucuk(dizi, out buyuk, out kucuk);
+ Console.Write("{0}{1}",buyuk, kucuk);
+}
+void Buyuk_Kucuk(int[] dizi, out int buyuk, out int kucuk)
+{
+ buyuk = 0; kucuk = 100;
+ foreach (var item in dizi)
+ {
+ if (item > buyuk) buyuk = item;
+ if (item < kucuk) kucuk = item;
+ }
+}
