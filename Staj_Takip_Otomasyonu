@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace Staj_Takip_Sistemi
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        public static string defter_sahibi_tc;
+        public static string defter_sahibi_adi;
+        public static string defter_firma;
+        public static string firma_kategori;
+        public static string kurum;
+        sqlbaglantisi baglanti = new sqlbaglantisi();
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+
+          
+            //mysql bağlantıyı sağladık
+            SqlCommand komut = new SqlCommand("select * from ogrenci where ogrenci_no='" + textBox6.Text + "' and ogrenci_sifre ='" + textBox5.Text + "'", baglanti.baglan());
+            //mysql komutumuzu yazdık komutta veritabanındaki admin tablosunda kullanıcı adı textbox1.text olan şifresi textbox2.text olan veriyi
+            // çekmesini istedik
+            baglanti.baglan();
+
+            SqlDataReader oku = komut.ExecuteReader();//veriyi okutma emrini verdik
+            if (oku.Read())//if eğer veriyi okumuşsa yani böyle bir kullanıcı veritabanında kayıtlıysa
+            {
+                defter_sahibi_tc = oku["ogrenci_tc"].ToString();
+                defter_sahibi_adi = oku["ogrenci_adsoyad"].ToString();
+                MessageBox.Show("Giriş Başarılı !");//giriş başarılı diye uyari verir
+              
+                ogrenci menu = new ogrenci();//yeni bir menü sayfası oluşturur
+                menu.Show();//menü sayfasını açar
+                this.Hide();////mevcut sayfayı gizler
+
+            }
+            else
+            {
+                MessageBox.Show("Kullanıcı Adınız Yada Şifreniz Yanlış Yazılmıştır");//hayır veri okuyamadıysa uyarı verir
+                textBox1.Text = "";
+                textBox2.Text = "";
+                //verileri temizler
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            //mysql bağlantıyı sağladık
+            SqlCommand komut = new SqlCommand("select * from firma_bilgi where firma_sicil_no='" + textBox4.Text + "' and sifre ='" + textBox3.Text + "'", baglanti.baglan());
+            //mysql komutumuzu yazdık komutta veritabanındaki admin tablosunda kullanıcı adı textbox1.text olan şifresi textbox2.text olan veriyi
+            // çekmesini istedik
+            baglanti.baglan();
+
+            SqlDataReader oku = komut.ExecuteReader();//veriyi okutma emrini verdik
+            if (oku.Read())//if eğer veriyi okumuşsa yani böyle bir kullanıcı veritabanında kayıtlıysa
+            {
+                defter_firma = oku["firma_adi"].ToString();
+                firma_kategori = oku["firma_kategori"].ToString();
+                MessageBox.Show("Giriş Başarılı !");//giriş başarılı diye uyari verir
+
+                firma menu = new firma();//yeni bir menü sayfası oluşturur
+                menu.Show();//menü sayfasını açar
+                this.Hide();////mevcut sayfayı gizler
+
+            }
+            else
+            {
+                MessageBox.Show("Kullanıcı Adınız Yada Şifreniz Yanlış Yazılmıştır");//hayır veri okuyamadıysa uyarı verir
+                textBox1.Text = "";
+                textBox2.Text = "";
+                //verileri temizler
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //mysql bağlantıyı sağladık
+            SqlCommand komut = new SqlCommand("select * from kurum where kurum_k_adi='" + textBox1.Text + "' and sifre ='" + textBox2.Text + "'", baglanti.baglan());
+            //mysql komutumuzu yazdık komutta veritabanındaki admin tablosunda kullanıcı adı textbox1.text olan şifresi textbox2.text olan veriyi
+            // çekmesini istedik
+            baglanti.baglan();
+
+            SqlDataReader oku = komut.ExecuteReader();//veriyi okutma emrini verdik
+            if (oku.Read())//if eğer veriyi okumuşsa yani böyle bir kullanıcı veritabanında kayıtlıysa
+            {
+                kurum = oku["kurum_adi"].ToString(); 
+              
+                MessageBox.Show("Giriş Başarılı !");//giriş başarılı diye uyari verir
+
+                kurum menu = new kurum();//yeni bir menü sayfası oluşturur
+                menu.Show();//menü sayfasını açar
+                this.Hide();////mevcut sayfayı gizler
+
+            }
+            else
+            {
+                MessageBox.Show("Kullanıcı Adınız Yada Şifreniz Yanlış Yazılmıştır");//hayır veri okuyamadıysa uyarı verir
+                textBox1.Text = "";
+                textBox2.Text = "";
+                //verileri temizler
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel1.Show();
+            panel2.Hide();
+            panel3.Hide();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            panel3.Show();
+            panel2.Hide();
+            panel1.Hide();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            panel2.Show();
+            panel1.Hide();
+            panel3.Hide();
+        }
+    }
+}
